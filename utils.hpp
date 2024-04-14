@@ -3,7 +3,7 @@
 #define UTILS_HPP
 
 #include <string>
-#include <fstream>
+#include <sstream>
 
 const std::string API_ENDPOINT{"http://docman.lcpu.dev"};
 
@@ -18,10 +18,13 @@ inline std::string encodeUriComponent(const std::string& s) {
             encoded += '+';
         } else {
             encoded += '%';
-            encoded += std::to_string((int) c / 16);
-            encoded += std::to_string((int) c % 16);
+            // convert to hex
+            std::stringstream ss;
+            ss << std::hex << (int) c;
+            encoded += ss.str();
         }
     }
+    std::cout << "Encoded: " << encoded << std::endl;
     return encoded;
 }
 
