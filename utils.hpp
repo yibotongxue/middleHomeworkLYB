@@ -24,7 +24,6 @@ inline std::string encodeUriComponent(const std::string& s) {
             encoded += ss.str();
         }
     }
-    std::cout << "Encoded: " << encoded << std::endl;
     return encoded;
 }
 
