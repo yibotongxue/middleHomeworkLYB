@@ -15,15 +15,15 @@ int main(int argc, char** argv) {
     auto citations = loadCitations(argv[2]);
     std::vector<Citation*> printedCitations{};
 
-    auto input = readFromFile(argv[3]);
-
-    // FIXME: process citations in the input text
+    // FIXME: read all input to the string, and process citations in the input text
+    // auto input = readFromFile(argv[3]);
+    // ...
 
     std::ostream& output = std::cout;
 
     for (auto c : printedCitations) {
-        output << input;
-        output << "\nReference: \n";
+        // output << input;  // print the paragraph first
+        output << "\nReferences: \n";
         // FIXME: print citation
     }
 
