@@ -5,7 +5,7 @@
 #include <string>
 #include <fstream>
 
-constexpr const auto& API_ENDPOINT = "http://docman.lcpu.dev";
+const std::string API_ENDPOINT{"http://docman.lcpu.dev"};
 
 inline std::string encodeUriComponent(const std::string& s) {
     std::string encoded;
@@ -23,16 +23,6 @@ inline std::string encodeUriComponent(const std::string& s) {
         }
     }
     return encoded;
-}
-
-inline std::string readFromFile(const std::string& filename) {
-    std::fstream fin(filename);
-    std::string content;
-    std::string line;
-    while (std::getline(fin, line)) {
-        content += line;
-    }
-    return content;
 }
 
 #endif 
