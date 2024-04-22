@@ -21,9 +21,10 @@ int main(int argc, char** argv) {
 
     std::ostream& output = std::cout;
 
+    // output << input;  // print the paragraph first
+    // output << "\nReferences:\n";
+    
     for (auto c : printedCitations) {
-        // output << input;  // print the paragraph first
-        output << "\nReferences: \n";
         // FIXME: print citation
     }
 
