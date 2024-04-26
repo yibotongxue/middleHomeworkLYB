@@ -13,7 +13,15 @@ protected:
     Citation& operator=(const Citation& c) = default; 
 
 public:
-    Citation() = delete; // delete the default constructor of Citation
+    /**
+     * @brief Delete default constructor for Citation class.
+     * 
+     * This default constructor is deleted to prevent accidental creation
+     * of Citation objects without specifying a unique identifier.
+     * 
+     * To create a Citation object, use the constructor with a unique identifier parameter.
+    */
+    Citation() = delete; 
 
     /**
      * @brief Construct a new Citation object with the given string
@@ -24,6 +32,7 @@ public:
 
     /**
      * @brief Construct a new Citation object as a copy of another Citation
+     * 
      * @param other The Citation to copy
     */
     Citation(const Citation& other);
