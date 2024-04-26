@@ -7,14 +7,14 @@
  * This constructor initializes a new Book object with the given attributes.
  * 
  * @param id The unique identifier for the book citation.
- * @param authors The author(s) of the book.
+ * @param author The author(s) of the book.
  * @param title The title of the book.
  * @param publisher The publisher of the book.
  * @param year The publication year of the book.
 */
-Book::Book(const std::string& id, const std::vector<std::string>& authors, const std::string& title,
-           const std::string& publisher, const std::string& year) :
-           Citation{id}, authors{authors}, title{title}, publisher{publisher}, year{year} {}
+Book::Book(const std::string& id, const std::string& author, const std::string& title,
+           const std::string& publisher, const int year) :
+           Citation{id}, author{author}, title{title}, publisher{publisher}, year{year} {}
            
 /**
  * @brief Copy constructor for Book class.
@@ -24,7 +24,7 @@ Book::Book(const std::string& id, const std::vector<std::string>& authors, const
  * @param another The Book object to be copied.
  */
 Book::Book(const Book& other)
-          : Citation(other), authors(other.authors), title(other.title),
+          : Citation(other), author(other.author), title(other.title),
             publisher(other.publisher), year(other.year) {}
 
 /**
@@ -53,8 +53,5 @@ Citation& Book::Clone(const Citation& another) {
  * @note This function is an overload of the print() function from the base class Citation.
 */
 void Book::print() const {
-   std::cout << "[" << id << "] book: ";
-   for(std::string author : authors)
-       std::cout << author << ", ";
-   std::cout << title << ", " << publisher << ", " << year << std::endl;    
+   std::cout << "[" << id << "] book: " << author << ", " << title << ", " << publisher << ", " << year << std::endl;    
 }
