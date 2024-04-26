@@ -57,6 +57,17 @@ public:
      * @return A reference to the current Citation object.
     */
     virtual Citation& Clone(const Citation& another);
+
+    /**
+     * @brief Print the citation information.
+     * 
+     * This pure virtual function is used to print the citation information.
+     * It is declared as const, indicating that it does not modify the object's state.
+     * 
+     * @note This function must be overridden in derived classes to provide
+     *       specific print behavior for each citation type.
+    */
+    virtual void print() const = 0;
 };
 
 #endif
