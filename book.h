@@ -71,6 +71,15 @@ public:
      * @return A reference to the newly created Book object.
     */
     virtual Citation& Clone(const Citation& another) override;
+
+    /**
+     * @brief Print the book citation information.
+     * This function overrides the pure virtual function print() from the base class Citation.
+     * It prnts the citation information specific to a Book object.
+     * 
+     * @note This function is declared as const, indicating that it dose not modify the object's state.
+    */
+    virtual void print() const override;
 };
 
 #endif
