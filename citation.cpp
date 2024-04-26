@@ -2,7 +2,7 @@
 
 // Constructor a new Citation object with the given ID
 // @param id The ID of the citation
-Citation::Citation(const std::string id) : id{id} {}
+Citation::Citation(const std::string& id) : id{id} {}
 
 // Constructor a new Citation object as a copy of another Citation.
 // @param other The Citation to copy.
