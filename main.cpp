@@ -41,9 +41,17 @@ bool createCitationsPointer(std::vector<Citation*>& citations, const json& j) {
             return false;
         if(!check_int(j, "year") || !check_int(j, "volume") || !check_int(j, "issue"))
             return false;
+        auto title = j["title"].get<std::string>();
+        auto author = j["title"].get<std::string>();
+        auto journal = j["journal"].get<std::string>();
+        int year = j["year"];
+        int volume = j["volume"];
+        int issue = j["issue"];
+        citations.push_back(dynamic_cast<Citation*>(new Article(id, title, author, journal, year, volume, issue)));
     } else {
         return false;
     }
+    return true;
 }
 
 void createCitations(std::vector<Citation*>& citations, const json& j) {
