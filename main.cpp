@@ -5,15 +5,8 @@
 #include "utils.hpp"
 #include "citation.h"
 
-#include "third_parties/nlohmann/json.hpp"
-#include "book.h"
-#include "webpage.h"
-#include "article.h"
-
 std::vector<Citation*> loadCitations(const std::string& filename) {
     // FIXME: load citations from file
-    std::ifstream file{ filename };
-    nlohmann::json data = nlohmann::json::parse(file);
 }
 
 int main(int argc, char** argv) {

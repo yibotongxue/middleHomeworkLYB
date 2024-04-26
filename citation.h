@@ -3,8 +3,6 @@
 #define CITATION_H
 
 #include <string>
-#include <vector>
-#include <iostream>
 
 /**
  * @brief Citation is an abstract base class representing a generic citation.
