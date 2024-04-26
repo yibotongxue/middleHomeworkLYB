@@ -4,6 +4,19 @@
 
 #include <string>
 
+/**
+ * @brief Citation is an abstract base class representing a generic citation.
+ * 
+ * This class serves as the base class for various types of citations, such as books,
+ * webpages, articles, etc. It provides a common interface for managing citation
+ * information and defines pure virtual functions that must be implemented by derived classes.
+ * 
+ * The Citation class defines a unique identifier for each citation and declares virtual
+ * functions for cloning and printing citation information.
+ * 
+ * @note This class is intended to be used as a base class for specific types of citations.
+ *       Derived classes must implement the pure virtual functions print() and Clone().
+ */
 class Citation {
 
 protected:
