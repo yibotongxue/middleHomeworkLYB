@@ -3,7 +3,6 @@
 #define ARTICLE_H
 
 #include "citation.h"
-#include <vector>
 
 /**
  * @brief Article class represents a citation for an article.
@@ -22,9 +21,9 @@
 class Article : public Citation {
 private:
     std::string title;
-    std::vector<std::string> authors;
+    std::string author;
     std::string journal;
-    std::string year;
+    int year;
     int volume;
     int issue;
 public:
@@ -35,7 +34,7 @@ public:
      * of Article objects without specifying all required attributes, such as
      * the unique identifier, title, authors, journal, publication year, volume, issue.
      * 
-     * To create an Article object, u se the constructor with appropriate parameters.
+     * To create an Article object, use the constructor with appropriate parameters.
     */
     Article() = delete;
 
@@ -44,14 +43,14 @@ public:
      * 
      * @param id The unique identifier for the article citation.
      * @param title The title of the article.
-     * @param authors The author(s) of the article.
+     * @param author The author(s) of the article.
      * @param journal The name of the journal where the article was published.
      * @param year The publication year of the article.
      * @param volume The volume number of the journal.
      * @param issue The issue number of the journal.
     */
-    Article(const std::string& id, const std::string& title, const std::vector<std::string>& authors,
-     const std::string& journal, const std::string& year, const int volume, const int issue);
+    Article(const std::string& id, const std::string& title, const std::string& author,
+     const std::string& journal, const int year, const int volume, const int issue);
 
     /**
      * @brief Copy constructor for Article objects.

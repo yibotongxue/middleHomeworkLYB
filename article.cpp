@@ -6,15 +6,15 @@
  * 
  * @param id The unique identifier for the article citation.
  * @param title The title of the article.
- * @param authors The author(s) of the article.
+ * @param author The author(s) of the article.
  * @param journal The name of the journal where the article was published.
  * @param year The publication year of the article.
  * @param volume The volume number of the journal.
  * @param issue The issue number of the journal.
  */
-Article::Article(const std::string& id, const std::string& title, const std::vector<std::string>&authors,
- const std::string& journal, const std::string& year, const int volume, const int issue) :
- Citation{id}, title{title}, authors{authors}, journal{journal}, year{year}, volume{volume}, issue{issue} {}
+Article::Article(const std::string& id, const std::string& title, const std::string&author,
+ const std::string& journal, const int year, const int volume, const int issue) :
+ Citation{id}, title{title}, author{author}, journal{journal}, year{year}, volume{volume}, issue{issue} {}
 
 /**
  * @brief Copy constructor for Article objects.
@@ -23,7 +23,7 @@ Article::Article(const std::string& id, const std::string& title, const std::vec
  * 
  * @param other The Article object to be copied.
  */
-Article::Article(const Article& other) : Citation{other}, title{other.title}, authors{authors}, journal{other.journal},
+Article::Article(const Article& other) : Citation{other}, title{other.title}, author{author}, journal{other.journal},
                  year{year}, volume{volume}, issue{issue} {}
 
 /**
@@ -51,7 +51,7 @@ Citation& Article::Clone(const Citation& another) {
  */
 void Article::print() const {
     std::cout << "[" << id << "] article: ";
-    for(auto author : authors) {
+    for(auto author : author) {
         std::cout << author << ", ";
     }
     std::cout << title << ", " << journal << ", " << year << ", " << volume << ", " << issue << std::endl;
