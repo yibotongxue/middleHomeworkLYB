@@ -3,6 +3,7 @@
 #define BOOK_H
 
 #include "citation.h"
+#include <vector>
 
 /**
  * @brief Book class represent a book citation.

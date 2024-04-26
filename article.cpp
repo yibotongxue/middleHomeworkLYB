@@ -1,4 +1,5 @@
 #include "article.h"
+#include <iostream>
 
 /**
  * @brief Construct a new Article object with the given attributes.
