@@ -1,5 +1,4 @@
 #include "book.h"
-#include <iostream>
 
 /**
  * @brief Construct a new Book object.

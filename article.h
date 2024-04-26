@@ -3,7 +3,6 @@
 #define ARTICLE_H
 
 #include "citation.h"
-#include <vector>
 
 /**
  * @brief Article class represents a citation for an article.
