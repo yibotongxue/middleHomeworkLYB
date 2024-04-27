@@ -35,11 +35,16 @@ WebPage::WebPage(const std::string& id, const std::string& title, const std::str
  *       when calling this constructor, such as network errors or JSON parsing errors.
 */
 WebPage::WebPage(const std::string& id, const std::string& url) : Citation{id}, url{url} {
+    // Make an HTTP GET request to retrieve the webpage title using the provided URL
     auto result = client.Get("/title/" + encodeUriComponent(url));
+
+    // Check if the request was successful (HTTP status code 200)
     if(result && result->status == httplib::OK_200) {
+        // Parse the reponse body as JSON to extract the webpage title
         auto jsonObj = nlohmann::json::parse(result->body);
         title = jsonObj["title"].get<std::string>();
     } else {
+        // Handle HTTP errors
         auto err = result.error();
         std::cerr << "HTTP error: " << httplib::to_string(err) << std::endl;
     }
