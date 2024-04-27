@@ -153,9 +153,17 @@ void createCitations(std::vector<Citation*>& citations, const json& j) {
  *       return an empty vector.
  */
 std::vector<Citation*> loadCitations(const std::string& filename) {
-    // FIXME: load citations from file
+
     std::ifstream file{ filename };
-    json data = nlohmann::json::parse(file);
+
+    if(!file.is_open()) {
+        std::cout << "打开文件失败:"  <<  filename << "\n";
+        return {};
+    }
+
+    json data;
+    file >> data;
+
     std::vector<Citation*>citations{};
     createCitations(citations, data);
     return citations;
@@ -175,6 +183,12 @@ std::vector<Citation*> loadCitations(const std::string& filename) {
  */
 std::string readFromFile(const std::string& filename) {
     std::ifstream file{ filename };
+
+    if(!file.is_open()) {
+        std::cout << "文件打开失败:" << filename << "\n";
+        return "";
+    }
+
     return std::string((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 }
 
@@ -213,8 +227,9 @@ int main(int argc, char** argv) {
 
     output << input; // Print input text
 
+    output << "\nReferences: \n"; // Print section header for references
+
     for (auto c : printedCitations) {
-        output << "\nReferences: \n"; // Print section header for references
         c->print(); // Print citation
     }
 
