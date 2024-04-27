@@ -2,6 +2,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <cstring>
+#include <string>
 
 #include "utils.hpp"
 #include "citation.h"
@@ -86,9 +88,9 @@ bool createCitationsPointer(std::vector<Citation*>& citations, const json& j) {
         auto title = j["title"].get<std::string>();
         auto author = j["title"].get<std::string>();
         auto journal = j["journal"].get<std::string>();
-        int year = j["year"];
-        int volume = j["volume"];
-        int issue = j["issue"];
+        int year = j["year"].get<int>();
+        int volume = j["volume"].get<int>();
+        int issue = j["issue"].get<int>();
 
         citations.push_back(dynamic_cast<Citation*>(new Article(id, title, author, journal, year, volume, issue)));
     } else {
@@ -199,15 +201,37 @@ std::string readFromFile(const std::string& filename) {
     return {};
 }
 
+void printCitations(const std::vector<Citation*>& printedCitations, const std::string& input, std::ostream& output) {
+    output << input; // Print input text
+
+    output << "\nReferences: \n"; // Print section header for references
+
+    for (auto c : printedCitations) {
+        c->print(output); // Print citation
+    }
+}
+
 int main(int argc, char** argv) {
     // "docman", "-c", "citations.json", "input.txt"
-
-    auto citations = loadCitations(argv[2]); // citations from JSON file specified in command line argument
+    std::vector<Citation*> citations;
+    std::string outputPath = "";
+    for(int i = 0; i < argc; i++) {
+        if(std::strcmp(argv[i], "-c") == 0) {
+            citations = loadCitations(argv[i + 1]);
+        }
+        if(std::strcmp(argv[i], "-o") == 0) {
+            outputPath = argv[i + 1];
+        }
+    }
     std::vector<Citation*> printedCitations{}; // Vector to store pointers to citations to be printed
 
-    auto input = readFromFile(argv[3]); // Read text from input file specified in command line argument
-    if(input == "-o")
-        input = argv[4];
+    std::string input = "";
+    if(strcmp(argv[argc - 1], "-") == 0) {
+        std::getline(std::cin, input, '\0');
+    }
+    else {
+        input = readFromFile(argv[argc - 1]);
+    }
     std::vector<std::string::size_type>left, right;
     auto it = input.find("[");
     while(it != input.npos) {
@@ -244,16 +268,18 @@ int main(int argc, char** argv) {
 
     if(ids.size() != printedCitations.size()) std::exit(1);
 
-    std::ostream& output = std::cout;
-
-    output << input; // Print input text
-
-    output << "\nReferences: \n"; // Print section header for references
-
-    for (auto c : printedCitations) {
-        c->print(); // Print citation
+    if(outputPath == "") {
+        printCitations(printedCitations, input, std::cout);
     }
-
+    else {
+        try{
+            std::ofstream output = std::ofstream{outputPath};
+            printCitations(printedCitations, input, output);
+        }
+        catch(...) {
+            exit(1);
+        }
+    }
     for (auto c : citations) {
         delete c; // Deallocate memory for citations
     }

@@ -3,6 +3,7 @@
 #define CITATION_H
 
 #include <string>
+#include <iostream>
 
 /**
  * @brief Citation is an abstract base class representing a generic citation.
@@ -80,7 +81,7 @@ public:
      * @note This function must be overridden in derived classes to provide
      *       specific print behavior for each citation type.
     */
-    virtual void print() const = 0;
+    virtual void print(std::ostream& output) const = 0;
 
     const std::string getId() const {
         return id;

@@ -102,7 +102,7 @@ public:
      * 
      * @note This function does not modify the object's state and is declared as const.
     */
-    virtual void print() const override;
+    virtual void print(std::ostream& output) const override;
 };
 
 #endif

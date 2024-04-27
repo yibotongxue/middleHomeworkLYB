@@ -1,5 +1,4 @@
 #include "webpage.h"
-#include <iostream>
 #include <typeinfo>
 #include <stdexcept>
 #include "third_parties/cpp-httplib/httplib.h"
@@ -91,6 +90,6 @@ Citation& WebPage::Clone(const Citation& another) {
  * This function prints the citation information specific to a WebPage object.
  * It prints the webpage's unique identifier, title, and website URL.
  */
-void WebPage::print() const {
-    std::cout << "[" << id << "] webpage: " << title << ". Avalable at " << url << std::endl;
+void WebPage::print(std::ostream& output) const {
+    output << "[" << id << "] webpage: " << title << ". Avalable at " << url << "\n";
 }

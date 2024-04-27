@@ -1,5 +1,4 @@
 #include "book.h"
-#include <iostream>
 #include <typeinfo>
 #include <stdexcept>
 #include "third_parties/cpp-httplib/httplib.h"
@@ -97,6 +96,6 @@ Citation& Book::Clone(const Citation& another) {
  * @note This function dose not modify the object's state and is declared as const.
  * @note This function is an overload of the print() function from the base class Citation.
 */
-void Book::print() const {
-   std::cout << "[" << id << "] book: " << author << ", " << title << ", " << publisher << ", " << year << std::endl;    
+void Book::print(std::ostream& output) const {
+   output << "[" << id << "] book: " << author << ", " << title << ", " << publisher << ", " << year << "\n";    
 }

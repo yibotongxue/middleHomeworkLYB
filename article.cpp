@@ -1,5 +1,4 @@
 #include "article.h"
-#include <iostream>
 #include <typeinfo>
 #include <stdexcept>
 
@@ -61,6 +60,6 @@ Citation& Article::Clone(const Citation& another) {
  * It prints the article's unique identifier, authors, title, journal, publication year,
  * volume, and issue number.
  */
-void Article::print() const {
-    std::cout << "[" << id << "] article: " << author << ", " << title << ", " << journal << ", " << year << ", " << volume << ", " << issue << std::endl;
+void Article::print(std::ostream& output) const {
+    output << "[" << id << "] article: " << author << ", " << title << ", " << journal << ", " << year << ", " << volume << ", " << issue << "\n";
 }
