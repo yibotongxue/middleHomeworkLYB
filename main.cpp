@@ -206,6 +206,8 @@ int main(int argc, char** argv) {
     std::vector<Citation*> printedCitations{}; // Vector to store pointers to citations to be printed
 
     auto input = readFromFile(argv[3]); // Read text from input file specified in command line argument
+    if(input == "-o")
+        input = argv[4];
     std::vector<std::string::size_type>left, right;
     auto it = input.find("[");
     while(it != input.npos) {
