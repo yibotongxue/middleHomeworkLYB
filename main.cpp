@@ -2,7 +2,6 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <ranges>
 
 #include "utils.hpp"
 #include "citation.h"

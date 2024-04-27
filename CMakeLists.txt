@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.14)
 project(docman)
 
-add_executable(docman main.cpp)
+set(SRC_LIST citation.cpp book.cpp webpage.cpp article.cpp main.cpp)
+
+add_executable(docman ${SRC_LIST})
 target_include_directories(docman PRIVATE third_parties)
 set_target_properties(docman PROPERTIES
   CXX_STANDARD 17

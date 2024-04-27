@@ -45,7 +45,7 @@ Book::Book(const std::string& id, const std::string& isbn) : Citation{id} {
         author = jsonObj["author"].get<std::string>();
         title = jsonObj["title"].get<std::string>();
         publisher = jsonObj["publisher"].get<std::string>();
-        year = jsonObj['year'].get<std::string>();
+        year = jsonObj["year"].get<std::string>();
     } else {
         // Handle HTTP errors
         auto err = result.error();
