@@ -1,5 +1,7 @@
 #include "book.h"
 #include <iostream>
+#include <typeinfo>
+#include <stdexcept>
 
 /**
  * @brief Construct a new Book object.
@@ -31,16 +33,25 @@ Book::Book(const Book& other)
  * @brief Clone the content of another Book object.
  * 
  * This function clones the content of another Book object and assigns it to
- * the current Book object, effecively avoiding the slicing problem.
+ * the current Book object, effectively avoiding the slicing problem.
  * 
  * @param another The Book object to clone.
- * @return A referenct to the current Book object.
+ * @return A reference to the current Book object.
+ * 
+ * @throws std::invalid_argument If the type of 'another' is not Book.
  * 
  * @note This function overrides the Clone function from the Citation class.
-*/
+ * @note It is recommended to use try-catch blocks to handle potential exceptions
+ *       when calling this function.
+ */
 Citation& Book::Clone(const Citation& another) {
-    auto bRef = dynamic_cast<const Book&>(another);
-    return Book::operator=(bRef);
+    if(typeid(another) == typeid(Book)) {
+        auto bRef = dynamic_cast<const Book&>(another);
+        return Book::operator=(bRef);
+    } else {
+        throw std::invalid_argument("Cannot clone from non-Book object");
+        return *this;
+    }
 }
 
 /**

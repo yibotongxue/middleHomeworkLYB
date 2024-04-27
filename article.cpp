@@ -1,5 +1,7 @@
 #include "article.h"
 #include <iostream>
+#include <typeinfo>
+#include <stdexcept>
 
 /**
  * @brief Construct a new Article object with the given attributes.
@@ -35,12 +37,22 @@ Article::Article(const Article& other) : Citation{other}, title{other.title}, au
  * @param another The Article object to clone.
  * @return A reference to the current Article object.
  * 
+ * @throws std::invalid_argument If the type of 'another' is not Article.
+ * 
  * @note This function overrides the Clone function from the base class Citation.
+ * @note It is recommended to use try-catch blocks to handle potential exceptions
+ *       when calling this function.
  */
 Citation& Article::Clone(const Citation& another) {
-    auto aRef = dynamic_cast<const Article&>(another);
-    return Article::operator=(aRef);
+    if (typeid(another) == typeid(Article)) {
+        auto aRef = dynamic_cast<const Article&>(another);
+        return Article::operator=(aRef);
+    } else {
+        throw std::invalid_argument("Cannot clone from non-Article object");
+        return *this;
+    }
 }
+
 
 /**
  * @brief Print the article citation information.
@@ -50,9 +62,5 @@ Citation& Article::Clone(const Citation& another) {
  * volume, and issue number.
  */
 void Article::print() const {
-    std::cout << "[" << id << "] article: ";
-    for(auto author : author) {
-        std::cout << author << ", ";
-    }
-    std::cout << title << ", " << journal << ", " << year << ", " << volume << ", " << issue << std::endl;
+    std::cout << "[" << id << "] article: " << author << ", " << title << ", " << journal << ", " << year << ", " << volume << ", " << issue << std::endl;
 }
