@@ -41,6 +41,24 @@ public:
     WebPage(const std::string& id, const std::string& title, const std::string& url);
 
     /**
+     * @brief Construct a new WebPage object with the given attributes.
+     * 
+     * This constructor initializes a new WebPage object with given arrtibutes: id and url.
+     * It retrieves the webpage title from an external API using the provided URL.
+     * 
+     * @param id The unique identifier for the webpage citation.
+     * @param url The website URL of the webpage citation.
+     * 
+     * @note This constructor fetches the webpage title from an external API using the provided URL.
+     *       If the request is successful, the title is extracted from the response body and assigned
+     *       to the WebPage object. If the request fails, an error message is printed to stanndanr error.
+     * 
+     * @note It is recommended to use try-catch blocks to handle potential exceptions
+     *       when calling this constructor, such as network errors or JSON parsing errors.
+    */
+    WebPage(const std::string& id, const std::string& url);
+
+    /**
      * @brief Copy constructor for WebPage objects.
      * 
      * This constructor creates a new WebPage object as a copy of anotheer WebPage object.
