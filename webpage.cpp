@@ -47,6 +47,7 @@ WebPage::WebPage(const std::string& id, const std::string& url) : Citation{id}, 
         // Handle HTTP errors
         auto err = result.error();
         std::cerr << "HTTP error: " << httplib::to_string(err) << std::endl;
+        std::exit(1);
     }
 }
 

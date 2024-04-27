@@ -67,7 +67,7 @@ bool createCitationsPointer(std::vector<Citation*>& citations, const json& j) {
         }
 
         auto isbn = j["isbn"].get<std::string>();
-        citations.push_back(new Book(id, isbn));
+        citations.push_back(dynamic_cast<Citation*>(new Book(id, isbn)));
     } 
     else if(type == "webpage") {
 
@@ -76,7 +76,7 @@ bool createCitationsPointer(std::vector<Citation*>& citations, const json& j) {
         }
         
         auto url = j["url"].get<std::string>();
-        citations.push_back(new WebPage(id, url));
+        citations.push_back(dynamic_cast<Citation*>(new WebPage(id, url)));
     } 
     else if(type == "article") {
         
@@ -158,7 +158,7 @@ std::vector<Citation*> loadCitations(const std::string& filename) {
 
     if(!file.is_open()) {
         std::cout << "打开文件失败:"  <<  filename << "\n";
-        return {};
+        exit(1);
     }
 
     json data;
@@ -186,7 +186,7 @@ std::string readFromFile(const std::string& filename) {
 
     if(!file.is_open()) {
         std::cout << "文件打开失败:" << filename << "\n";
-        return "";
+        exit(1);
     }
 
     return std::string((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
@@ -210,7 +210,7 @@ int main(int argc, char** argv) {
         right.push_back(it);
         it = input.find("]", it + 1);
     }
-    if(left.size() != right.size()) std::exit(1); // check for mismatched brackets in input text
+    if(left.size() == 0 || right.size() == 0 || left.size() != right.size()) std::exit(1); // check for mismatched brackets in input text
     std::vector<std::string>ids;
     for(int i = 0; i < left.size(); i++) {
         ids.push_back(input.substr(left[i] + 1, right[i] - left[i] - 1)); // Extract IDs enclosed in brackets from input text
