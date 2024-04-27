@@ -17,7 +17,7 @@ private:
     std::string author;
     std::string title;
     std::string publisher;
-    int year;
+    std::string year;
 
 public:
     /**
@@ -40,7 +40,18 @@ public:
      * @param publisher The publisher of the book.
      * @param year The publication year of the book.
     */
-    Book(const std::string& id, const std::string& author, const std::string& title, const std::string& publisher, const int year);
+    Book(const std::string& id, const std::string& author, const std::string& title, const std::string& publisher, const std::string year);
+
+    /**
+     * @brief Construct a new Book object with the given attributes.
+     * 
+     * This constructor intializes a new Book object with the given attributes.
+     * It takes a unique identifier and an ISBN number to fetch book information from an external API.
+     * 
+     * @param id The unique identifier for the book citation.
+     * @param isbn The ISBN number of the book.
+    */
+    Book(const std::string& id, const std::string& isbn);
 
     /**
      * @brief Copy constructor for Book class.
