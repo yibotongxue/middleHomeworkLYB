@@ -14,7 +14,7 @@
  * @param volume The volume number of the journal.
  * @param issue The issue number of the journal.
  */
-Article::Article(const std::string& id, const std::string& title, const std::string&author,
+Article::Article(const std::string& id, const std::string& title, const std::string& author,
  const std::string& journal, const int year, const int volume, const int issue) :
  Citation{id}, title{title}, author{author}, journal{journal}, year{year}, volume{volume}, issue{issue} {}
 
@@ -25,8 +25,8 @@ Article::Article(const std::string& id, const std::string& title, const std::str
  * 
  * @param other The Article object to be copied.
  */
-Article::Article(const Article& other) : Citation{other}, title{other.title}, author{author}, journal{other.journal},
-                 year{year}, volume{volume}, issue{issue} {}
+Article::Article(const Article& other) : Citation{other}, title{other.title}, author{other.author}, journal{other.journal},
+                 year{other.year}, volume{other.volume}, issue{other.issue} {}
 
 /**
  * @brief Clone the content of another Article object.

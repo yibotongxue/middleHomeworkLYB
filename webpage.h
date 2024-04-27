@@ -36,7 +36,7 @@ public:
      * 
      * @param id The unique identifier for the webpage citation.
      * @param title The title of the webpage.
-     * @param website The website URL of the webpage.
+     * @param url The website URL of the webpage.
     */
     WebPage(const std::string& id, const std::string& title, const std::string& url);
 
@@ -68,7 +68,7 @@ public:
     WebPage(const WebPage& other);
 
    /**
-    * @breif Default virtual destructor for WebPage objects.
+    * @brief Default virtual destructor for WebPage objects.
     * 
     * This virtual destructor allows derived classes to properly clean up resources
     * when objects are destroyed. It is provided with a default implementation.
@@ -79,14 +79,18 @@ public:
      * @brief Clone the content of another WebPage object.
      * 
      * This virtual function creates and returns a copy of the current WebPage object,
-     * effectively avoiding the slicing problem. Derived classes shoule override this
+     * effectively avoiding the slicing problem. Derived classes should override this
      * function to provide proper cloning behavior specific to their type.
      * 
      * @param another The Citation object to clone, must be of type WebPage.
      * @return A reference to the current WebPage object.
      * 
+     * @throws std::invalid_argument If the type of 'another' is not WebPage.
+     * 
      * @note This function overrides the Clone function from the base class Citation.
-    */
+     * @note It is recommended to use try-catch blocks to handle potential exceptions
+     *       when calling this function.
+     */
     virtual Citation& Clone(const Citation& another) override;
 
     /**

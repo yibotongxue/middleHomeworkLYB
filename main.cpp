@@ -1,6 +1,8 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <algorithm>
+#include <ranges>
 
 #include "utils.hpp"
 #include "citation.h"
@@ -136,29 +138,88 @@ void createCitations(std::vector<Citation*>& citations, const json& j) {
     }
 }
 
+/**
+ * @brief Load citations from a JSON file and create Citation objects.
+ * 
+ * This function reads citation data from
+ * a JSON file, creates Citation objects based on the data, and returns a vector containing
+ * pointers to these objects.
+ * 
+ * @param filename The path to the JSON file containing citation data.
+ * @return A vector containing pointers to the created Citation objects.
+ * 
+ * @note This function reads JSON data from the specified file and uses it to create Citation objects.
+ * 
+ * @note If the JSON file cannot be opened or parsed correctly, the function may throw exceptions or
+ *       return an empty vector.
+ */
 std::vector<Citation*> loadCitations(const std::string& filename) {
     // FIXME: load citations from file
+    std::ifstream file{ filename };
+    json data = nlohmann::json::parse(file);
+    std::vector<Citation*>citations{};
+    createCitations(citations, data);
+    return citations;
+}
+
+/**
+ * @brief Read text from a file and return it as a string.
+ * 
+ * This function reads the contents of a text file and returns them as a string.
+ * 
+ * @param filename The path to the text file.
+ * @return A string containing the contents of the text file.
+ * 
+ * @note This function reads the entire contents of the specified file into memory as a string.
+ * 
+ * @note If the file cannot be opened or read, the function may throw exceptions or return an empty string.
+ */
+std::string readFromFile(const std::string& filename) {
+    std::ifstream file{ filename };
+    return std::string((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 }
 
 int main(int argc, char** argv) {
     // "docman", "-c", "citations.json", "input.txt"
 
-    auto citations = loadCitations(argv[2]);
-    std::vector<Citation*> printedCitations{};
+    auto citations = loadCitations(argv[2]); // citations from JSON file specified in command line argument
+    std::vector<Citation*> printedCitations{}; // Vector to store pointers to citations to be printed
 
-    // FIXME: read all input to the string, and process citations in the input text
-    // auto input = readFromFile(argv[3]);
-    // ...
+    auto input = readFromFile(argv[3]); // Read text from input file specified in command line argument
+    std::vector<std::string::size_type>left, right;
+    auto it = input.find("[");
+    while(it != input.npos) {
+        left.push_back(it);
+        it = input.find("[", it + 1);
+    }
+    it = input.find("]");
+    while(it != input.npos) {
+        right.push_back(it);
+        it = input.find("]", it + 1);
+    }
+    if(left.size() != right.size()) std::exit(1); // check for mismatched brackets in input text
+    std::vector<std::string>ids;
+    for(int i = 0; i < left.size(); i++) {
+        ids.push_back(input.substr(left[i] + 1, right[i] - left[i] - 1)); // Extract IDs enclosed in brackets from input text
+    }
+    std::sort(ids.begin(), ids.end());
+    for(auto& id : ids) {
+        for(Citation* citation : citations) {
+            if(citation->getId() == id)
+                printedCitations.push_back(citation);
+        }
+    }
 
     std::ostream& output = std::cout;
 
+    output << input; // Print input text
+
     for (auto c : printedCitations) {
-        // output << input;  // print the paragraph first
-        output << "\nReferences: \n";
-        // FIXME: print citation
+        output << "\nReferences: \n"; // Print section header for references
+        c->print(); // Print citation
     }
 
     for (auto c : citations) {
-        delete c;
+        delete c; // Deallocate memory for citations
     }
 }

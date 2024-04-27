@@ -20,7 +20,7 @@ extern httplib::Client client;
  * @param year The publication year of the book.
 */
 Book::Book(const std::string& id, const std::string& author, const std::string& title,
-           const std::string& publisher, const std::string year) :
+           const std::string& publisher, const std::string& year) :
            Citation{id}, author{author}, title{title}, publisher{publisher}, year{year} {}
 
 /**
