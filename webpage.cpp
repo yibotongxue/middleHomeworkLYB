@@ -2,6 +2,11 @@
 #include <iostream>
 #include <typeinfo>
 #include <stdexcept>
+#include "third_parties/cpp-httplib/httplib.h"
+#include "third_parties/nlohmann/json.hpp"
+#include "utils.hpp"
+
+extern httplib::Client client;
 
 /**
  * @brief Construct a new WebPage object with the given attributes.
@@ -12,6 +17,33 @@
 */
 WebPage::WebPage(const std::string& id, const std::string& title, const std::string& url) :
                  Citation{id}, title{title}, url{url} {}
+
+/**
+ * @brief Construct a new WebPage object with the given attributes.
+ * 
+ * This constructor initializes a new WebPage object with the given attributes: id and url.
+ * It retrieves the webpage title from an external API using the provided URL.
+ * 
+ * @param id The unique identifier for the webpage citation.
+ * @param url The website URL of the webpage.
+ * 
+ * @note This constructor fetches the webpage title from an external API using the provided URL.
+ *       If the request is successful, the title is extracted from the response body and assigned
+ *       to the WebPage object. If the request fails, an error message is printed to standard error.
+ * 
+ * @note It is recommended to use try-catch blocks to handle potential exceptions
+ *       when calling this constructor, such as network errors or JSON parsing errors.
+*/
+WebPage::WebPage(const std::string& id, const std::string& url) : Citation{id}, url{url} {
+    auto result = client.Get("/title/" + encodeUriComponent(url));
+    if(result && result->status == httplib::OK_200) {
+        auto jsonObj = nlohmann::json::parse(result->body);
+        title = jsonObj["title"].get<std::string>();
+    } else {
+        auto err = result.error();
+        std::cerr << "HTTP error: " << httplib::to_string(err) << std::endl;
+    }
+}
 
 /**
  * @brief Copy constructor for WebPage objects.
