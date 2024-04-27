@@ -48,8 +48,6 @@ Book::Book(const std::string& id, const std::string& isbn) : Citation{id} {
         year = jsonObj["year"].get<std::string>();
     } else {
         // Handle HTTP errors
-        auto err = result.error();
-        std::cerr << "HTTP error: " << httplib::to_string(err) << std::endl;
         std::exit(1);
     }
 }

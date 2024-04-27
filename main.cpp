@@ -189,7 +189,14 @@ std::string readFromFile(const std::string& filename) {
         exit(1);
     }
 
-    return std::string((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    try{
+        std::string res = std::string((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+        return res;
+    }
+    catch(...) {
+        std::exit(1);
+    }
+    return {};
 }
 
 int main(int argc, char** argv) {
@@ -203,14 +210,24 @@ int main(int argc, char** argv) {
     auto it = input.find("[");
     while(it != input.npos) {
         left.push_back(it);
-        it = input.find("[", it + 1);
+        try{
+            it = input.find("[", it + 1);
+        }
+        catch(...) {
+            break;
+        }
     }
     it = input.find("]");
     while(it != input.npos) {
         right.push_back(it);
-        it = input.find("]", it + 1);
+        try{
+            it = input.find("]", it + 1);
+        }
+        catch(...) {
+            break;
+        }
     }
-    if(left.size() == 0 || right.size() == 0 || left.size() != right.size()) std::exit(1); // check for mismatched brackets in input text
+    if(left.size() != right.size()) std::exit(1); // check for mismatched brackets in input text
     std::vector<std::string>ids;
     for(int i = 0; i < left.size(); i++) {
         ids.push_back(input.substr(left[i] + 1, right[i] - left[i] - 1)); // Extract IDs enclosed in brackets from input text
