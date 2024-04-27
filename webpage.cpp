@@ -10,8 +10,8 @@
  * @param title The title of the webpage.
  * @param website The webiste URL of the webpage.
 */
-WebPage::WebPage(const std::string& id, const std::string& title, const std::string& website) :
-                 Citation{id}, title{title}, website{website} {}
+WebPage::WebPage(const std::string& id, const std::string& title, const std::string& url) :
+                 Citation{id}, title{title}, url{url} {}
 
 /**
  * @brief Copy constructor for WebPage objects.
@@ -21,7 +21,7 @@ WebPage::WebPage(const std::string& id, const std::string& title, const std::str
  * @parma other The WebPage object to be copied.
 */
 WebPage::WebPage(const WebPage& other) :
-                 Citation{other}, title{other.title}, website{other.website} {}
+                 Citation{other}, title{other.title}, url{other.url} {}
 
 /**
  * @brief Clone the content of another WebPage object.
@@ -56,5 +56,5 @@ Citation& WebPage::Clone(const Citation& another) {
  * It prints the webpage's unique identifier, title, and website URL.
  */
 void WebPage::print() const {
-    std::cout << "[" << id << "] webpage: " << title << ". Avalable at " << website << std::endl;
+    std::cout << "[" << id << "] webpage: " << title << ". Avalable at " << url << std::endl;
 }

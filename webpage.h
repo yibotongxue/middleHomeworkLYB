@@ -17,7 +17,7 @@
 class WebPage : public Citation {
 private:
     std::string title;
-    std::string website;
+    std::string url;
 
 public:
     /**
@@ -38,7 +38,7 @@ public:
      * @param title The title of the webpage.
      * @param website The website URL of the webpage.
     */
-    WebPage(const std::string& id, const std::string& title, const std::string& website);
+    WebPage(const std::string& id, const std::string& title, const std::string& url);
 
     /**
      * @brief Copy constructor for WebPage objects.
