@@ -217,20 +217,35 @@ int main(int argc, char** argv) {
     std::string outputPath = "";
     for(int i = 0; i < argc; i++) {
         if(std::strcmp(argv[i], "-c") == 0) {
-            citations = loadCitations(argv[i + 1]);
+            try{
+                citations = loadCitations(argv[i + 1]);
+            }
+            catch(...) {
+                exit(1);
+            }
         }
         if(std::strcmp(argv[i], "-o") == 0) {
-            outputPath = argv[i + 1];
+            try{
+                outputPath = argv[i + 1];
+            }
+            catch(...) {
+                exit(1);
+            }
         }
     }
     std::vector<Citation*> printedCitations{}; // Vector to store pointers to citations to be printed
 
     std::string input = "";
-    if(strcmp(argv[argc - 1], "-") == 0) {
-        std::getline(std::cin, input, '\0');
+    try{
+        if(strcmp(argv[argc - 1], "-") == 0) {
+            std::getline(std::cin, input, '\0');
+        }
+        else {
+            input = readFromFile(argv[argc - 1]);
+        }
     }
-    else {
-        input = readFromFile(argv[argc - 1]);
+    catch(...) {
+        exit(1);
     }
     std::vector<std::string::size_type>left, right;
     auto it = input.find("[");
@@ -269,7 +284,12 @@ int main(int argc, char** argv) {
     if(ids.size() != printedCitations.size()) std::exit(1);
 
     if(outputPath == "") {
-        printCitations(printedCitations, input, std::cout);
+        try{
+            printCitations(printedCitations, input, std::cout);
+        }
+        catch(...) {
+            exit(1);
+        }
     }
     else {
         try{
