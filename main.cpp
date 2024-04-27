@@ -240,6 +240,8 @@ int main(int argc, char** argv) {
         }
     }
 
+    if(ids.size() != printedCitations.size()) std::exit(1);
+
     std::ostream& output = std::cout;
 
     output << input; // Print input text
