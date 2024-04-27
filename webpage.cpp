@@ -1,5 +1,7 @@
 #include "webpage.h"
 #include <iostream>
+#include <typeinfo>
+#include <stdexcept>
 
 /**
  * @brief Construct a new WebPage object with the given attributes.
@@ -19,7 +21,7 @@ WebPage::WebPage(const std::string& id, const std::string& title, const std::str
  * @parma other The WebPage object to be copied.
 */
 WebPage::WebPage(const WebPage& other) :
-                 Citation{other}, title{title}, website{website} {}
+                 Citation{other}, title{other.title}, website{other.website} {}
 
 /**
  * @brief Clone the content of another WebPage object.
@@ -30,12 +32,22 @@ WebPage::WebPage(const WebPage& other) :
  * @param another The WebPage object to clone.
  * @return A reference to the current WebPage object.
  * 
+ * @throws std::invalid_argument If the type of 'another' is not WebPage.
+ * 
  * @note This function overrides the Clone function from the base class Citation.
+ * @note It is recommended to use try-catch blocks to handle potential exceptions
+ *       when calling this function.
  */
 Citation& WebPage::Clone(const Citation& another) {
-    auto wRef = dynamic_cast<const WebPage&>(another);
-    return WebPage::operator=(wRef);
+    if (typeid(another) == typeid(WebPage)) {
+        auto wRef = dynamic_cast<const WebPage&>(another);
+        return WebPage::operator=(wRef);
+    } else {
+        throw std::invalid_argument("Cannot clone from non-WebPage object");
+        return *this;
+    }
 }
+
 
 /**
  * @brief Print the webpage citation information.
