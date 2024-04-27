@@ -81,6 +81,10 @@ public:
      *       specific print behavior for each citation type.
     */
     virtual void print() const = 0;
+
+    const std::string getId() const {
+        return id;
+    }
 };
 
 #endif
