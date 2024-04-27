@@ -2,6 +2,11 @@
 #include <iostream>
 #include <typeinfo>
 #include <stdexcept>
+#include "third_parties/cpp-httplib/httplib.h"
+#include "third_parties/nlohmann/json.hpp"
+#include "utils.hpp"
+
+extern httplib::Client client;
 
 /**
  * @brief Construct a new Book object.
@@ -15,9 +20,39 @@
  * @param year The publication year of the book.
 */
 Book::Book(const std::string& id, const std::string& author, const std::string& title,
-           const std::string& publisher, const int year) :
+           const std::string& publisher, const std::string year) :
            Citation{id}, author{author}, title{title}, publisher{publisher}, year{year} {}
-           
+
+/**
+ * @brief Construct a new Book object.
+ * 
+ * This constructor initializes a new Book object with the given attributes.
+ * It retrieves additional information about the book from an external API using the ISBN.
+ * 
+ * @param id The unique identifier for the book citation.
+ * @param isbn The International Standard Book Number (ISBN) of the book.
+ */
+Book::Book(const std::string& id, const std::string& isbn) : Citation{id} {
+    // Make a GET request to retrieve book information using the ISBN
+    auto result = client.Get("/isbn/" + encodeUriComponent(isbn));
+
+    // Check if the request was successful (HTTP status code 200)
+    if(result && result->status == httplib::OK_200) {
+        // Parse the response body as JSON
+        auto jsonObj = nlohmann::json::parse(result->body);
+
+        // Extract book information from the JSON object
+        author = jsonObj["author"].get<std::string>();
+        title = jsonObj["title"].get<std::string>();
+        publisher = jsonObj["publisher"].get<std::string>();
+        year = jsonObj['year'].get<std::string>();
+    } else {
+        // Handle HTTP errors
+        auto err = result.error();
+        std::cerr << "HTTP error: " << httplib::to_string(err) << std::endl;
+    }
+}
+
 /**
  * @brief Copy constructor for Book class.
  * 
