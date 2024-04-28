@@ -152,7 +152,11 @@ std::vector<std::shared_ptr<Citation>> loadCitations(const std::string& filename
 
     if(!file.is_open()) {
         std::cout << "文献合集打开文件失败:"  <<  filename << "\n";
-        exit(1);
+        std::exit(1);
+    }
+
+    if(file.fail()) {
+        std::exit(1);
     }
 
     json data;
@@ -182,7 +186,11 @@ std::string readFromFile(const std::string& filename) {
 
     if(!file.is_open()) {
         std::cout << "输入文件打开失败:" << filename << "\n";
-        exit(1);
+        std::exit(1);
+    }
+
+    if(file.fail()) {
+        std::exit(1);
     }
 
     try{
