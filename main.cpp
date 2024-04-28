@@ -217,35 +217,46 @@ int main(int argc, char** argv) {
     // "docman", "-c", "citations.json", "input.txt"
     std::vector<std::shared_ptr<Citation>> citations;
     std::string outputPath = "";
-    for(int i = 0; i < argc; i++) {
+    std::string input = "";
+    for(int i = 1; i < argc; i++) {
         if(std::strcmp(argv[i], "-c") == 0) {
             if(i == argc - 1) exit(1);
             try{
                 citations = loadCitations(argv[i + 1]);
+                i++;
             }
             catch(...) {
-                exit(1);
+                std::exit(1);
             }
         }
-        if(std::strcmp(argv[i], "-o") == 0) {
-            if(i == argc - 1) exit(1);
-            outputPath = argv[i + 1];
+        else if(std::strcmp(argv[i], "-o") == 0) {
+            try{
+                if(i == argc - 1) exit(1);
+                outputPath = argv[i + 1];
+                i++;
+            }
+            catch(...) {
+                std::exit(1);
+            }
+        }
+        else if(i == argc - 1) {
+            try{
+                if(strcmp(argv[argc - 1], "-") == 0) {
+                    std::getline(std::cin, input, '\n');
+                }
+                else {
+                    input = readFromFile(argv[argc - 1]);
+                }
+            }
+            catch(...) {
+                std::exit(1);
+            }
+        }
+        else {
+            exit(1);
         }
     }
     std::vector<std::shared_ptr<Citation>> printedCitations{}; // Vector to store pointers to citations to be printed
-
-    std::string input = "";
-    try{
-        if(strcmp(argv[argc - 1], "-") == 0) {
-            std::getline(std::cin, input, '\n');
-        }
-        else {
-            input = readFromFile(argv[argc - 1]);
-        }
-    }
-    catch(...) {
-        std::exit(1);
-    }
     std::vector<std::string::size_type>left, right;
     auto it = input.find("[");
     while(it != input.npos) {
