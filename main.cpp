@@ -49,7 +49,7 @@ using json = nlohmann::json;
  * @note It is recommended to use try-catch blocks to handle potential exceptions when calling
  *       this function, such as network errors or JSON parsing errors.
 */
-bool createCitationsPointer(std::vector<Citation*>& citations, const json& j) {
+bool createCitationsPointer(std::vector<std::shared_ptr<Citation>>& citations, const json& j) {
     if(!check_string(j, "type") || !check_string(j, "id"))
         return false;
     auto type = j["type"].get<std::string>();
@@ -61,7 +61,7 @@ bool createCitationsPointer(std::vector<Citation*>& citations, const json& j) {
         }
 
         auto isbn = j["isbn"].get<std::string>();
-        citations.push_back(dynamic_cast<Citation*>(new Book(id, isbn)));
+        citations.push_back(std::shared_ptr<Citation>(dynamic_cast<Citation*>(new Book(id, isbn))));
     } 
     else if(type == "webpage") {
 
@@ -70,7 +70,7 @@ bool createCitationsPointer(std::vector<Citation*>& citations, const json& j) {
         }
         
         auto url = j["url"].get<std::string>();
-        citations.push_back(dynamic_cast<Citation*>(new WebPage(id, url)));
+        citations.push_back(std::shared_ptr<Citation>(dynamic_cast<Citation*>(new WebPage(id, url))));
     } 
     else if(type == "article") {
         
@@ -84,7 +84,7 @@ bool createCitationsPointer(std::vector<Citation*>& citations, const json& j) {
         int volume = j["volume"].get<int>();
         int issue = j["issue"].get<int>();
 
-        citations.push_back(dynamic_cast<Citation*>(new Article(id, title, author, journal, year, volume, issue)));
+        citations.push_back(std::shared_ptr<Citation>(dynamic_cast<Citation*>(new Article(id, title, author, journal, year, volume, issue))));
     } else {
         return false;
     }
@@ -109,7 +109,7 @@ bool createCitationsPointer(std::vector<Citation*>& citations, const json& j) {
  * @note This function modifies the citations vector to store the pointers to the created Citation objects.
  *       It does not create copies of the Citation objects, but rather stores pointers to them.
  */
-void createCitations(std::vector<Citation*>& citations, const json& j) {
+void createCitations(std::vector<std::shared_ptr<Citation>>& citations, const json& j) {
     // Create Citation objects and store their pointers in the citations vector
     if(createCitationsPointer(citations, j))
         return;
@@ -146,7 +146,7 @@ void createCitations(std::vector<Citation*>& citations, const json& j) {
  * @note If the JSON file cannot be opened or parsed correctly, the function may throw exceptions or
  *       return an empty vector.
  */
-std::vector<Citation*> loadCitations(const std::string& filename) {
+std::vector<std::shared_ptr<Citation>> loadCitations(const std::string& filename) {
 
     std::ifstream file{ filename };
 
@@ -160,7 +160,7 @@ std::vector<Citation*> loadCitations(const std::string& filename) {
 
     if(data.is_null()) exit(1);
 
-    std::vector<Citation*>citations{};
+    std::vector<std::shared_ptr<Citation>>citations{};
     createCitations(citations, data);
     return citations;
 }
@@ -195,7 +195,7 @@ std::string readFromFile(const std::string& filename) {
     return {};
 }
 
-void printCitations(const std::vector<Citation*>& printedCitations, const std::string& input, std::ostream& output) {
+void printCitations(const std::vector<std::shared_ptr<Citation>>& printedCitations, const std::string& input, std::ostream& output) {
     output << input; // Print input text
 
     output << "\n\nReferences:\n"; // Print section header for references
@@ -207,7 +207,7 @@ void printCitations(const std::vector<Citation*>& printedCitations, const std::s
 
 int main(int argc, char** argv) {
     // "docman", "-c", "citations.json", "input.txt"
-    std::vector<Citation*> citations;
+    std::vector<std::shared_ptr<Citation>> citations;
     std::string outputPath = "";
     for(int i = 0; i < argc; i++) {
         if(std::strcmp(argv[i], "-c") == 0) {
@@ -224,12 +224,12 @@ int main(int argc, char** argv) {
             outputPath = argv[i + 1];
         }
     }
-    std::vector<Citation*> printedCitations{}; // Vector to store pointers to citations to be printed
+    std::vector<std::shared_ptr<Citation>> printedCitations{}; // Vector to store pointers to citations to be printed
 
     std::string input = "";
     try{
         if(strcmp(argv[argc - 1], "-") == 0) {
-            std::getline(std::cin, input, '\0');
+            std::getline(std::cin, input, '\n');
         }
         else {
             input = readFromFile(argv[argc - 1]);
@@ -268,7 +268,7 @@ int main(int argc, char** argv) {
     std::sort(ids.begin(), ids.end());
     std::unique(ids.begin(), ids.end());
     for(auto& id : ids) {
-        for(Citation* citation : citations) {
+        for(auto& citation : citations) {
             if(citation->getId() == id)
                 printedCitations.push_back(citation);
         }
@@ -293,8 +293,8 @@ int main(int argc, char** argv) {
             std::exit(1);
         }
     }
-    for (auto c : citations) {
-        delete c; // Deallocate memory for citations
-    }
+    // for (auto c : citations) {
+    //     delete c; // Deallocate memory for citations
+    // }
     return 0;
 }
