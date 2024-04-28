@@ -74,7 +74,7 @@ bool createCitationsPointer(std::vector<Citation*>& citations, const json& j) {
     } 
     else if(type == "article") {
         
-        if(!check_int(j, "year") || !check_int(j, "volume") || !check_int(j, "issue"))
+        if(!check_string(j, "title") || !check_string(j, "author") || !check_string(j, "journal") || !check_int(j, "year") || !check_int(j, "volume") || !check_int(j, "issue"))
             return false;
 
         auto title = j["title"].get<std::string>();
