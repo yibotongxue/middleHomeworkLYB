@@ -204,7 +204,7 @@ std::string readFromFile(const std::string& filename) {
 void printCitations(const std::vector<Citation*>& printedCitations, const std::string& input, std::ostream& output) {
     output << input; // Print input text
 
-    output << "\n\nReferences: \n"; // Print section header for references
+    output << "\nReferences:\n"; // Print section header for references
 
     for (auto c : printedCitations) {
         c->print(output); // Print citation
@@ -236,11 +236,9 @@ int main(int argc, char** argv) {
     try{
         if(strcmp(argv[argc - 1], "-") == 0) {
             std::getline(std::cin, input, '\0');
-            while(input.back() == '\n') input.pop_back();
         }
         else {
             input = readFromFile(argv[argc - 1]);
-            while(input.back() == '\n') input.pop_back();
         }
     }
     catch(...) {
@@ -269,10 +267,11 @@ int main(int argc, char** argv) {
     }
     if(left.size() == 0 || right.size() == 0 || left.size() != right.size()) std::exit(1); // check for mismatched brackets in input text
     std::vector<std::string>ids;
+    std::sort(ids.begin(), ids.end());
+    std::unique(ids.begin(), ids.end());
     for(int i = 0; i < left.size(); i++) {
         ids.push_back(input.substr(left[i] + 1, right[i] - left[i] - 1)); // Extract IDs enclosed in brackets from input text
     }
-    std::sort(ids.begin(), ids.end());
     for(auto& id : ids) {
         for(Citation* citation : citations) {
             if(citation->getId() == id)

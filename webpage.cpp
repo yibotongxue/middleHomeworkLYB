@@ -91,5 +91,5 @@ Citation& WebPage::Clone(const Citation& another) {
  * It prints the webpage's unique identifier, title, and website URL.
  */
 void WebPage::print(std::ostream& output) const {
-    output << "[" << id << "] webpage: " << title << ". Avalable at " << url << "\n";
+    output << "[" << id << "] webpage: " << title << ". Available at " << url << "\n";
 }
