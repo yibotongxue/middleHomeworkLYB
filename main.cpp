@@ -240,6 +240,7 @@ int main(int argc, char** argv) {
         }
         else {
             input = readFromFile(argv[argc - 1]);
+            while(input.back() == '\n') input.pop_back();
         }
     }
     catch(...) {
@@ -301,4 +302,5 @@ int main(int argc, char** argv) {
     for (auto c : citations) {
         delete c; // Deallocate memory for citations
     }
+    return 0;
 }
