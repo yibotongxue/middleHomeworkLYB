@@ -41,6 +41,7 @@ WebPage::WebPage(const std::string& id, const std::string& url) : Citation{id}, 
     if(result && result->status == httplib::OK_200) {
         // Parse the reponse body as JSON to extract the webpage title
         auto jsonObj = nlohmann::json::parse(result->body);
+        if(!check_string(jsonObj, "title")) exit(1);
         title = jsonObj["title"].get<std::string>();
     } else {
         // Handle HTTP errors

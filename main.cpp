@@ -19,14 +19,6 @@ httplib::Client client{ API_ENDPOINT };
 
 using json = nlohmann::json;
 
-inline bool check_string(const json& j, const std::string& s) {
-    return j.contains(s) && j[s].is_string();
-}
-
-inline bool check_int(const json& j, const std::string& s) {
-    return j.contains(s) && j[s].is_number();
-}
-
 /**
  * @brief Create Citation objects from JSON data and store their pointers in a vector.
  * 

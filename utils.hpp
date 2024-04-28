@@ -27,4 +27,13 @@ inline std::string encodeUriComponent(const std::string& s) {
     return encoded;
 }
 
+inline bool check_string(const json& j, const std::string& s) {
+    return j.contains(s) && j[s].is_string();
+}
+
+inline bool check_int(const json& j, const std::string& s) {
+    return j.contains(s) && j[s].is_number();
+}
+
+
 #endif 

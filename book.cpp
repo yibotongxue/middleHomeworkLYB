@@ -41,6 +41,7 @@ Book::Book(const std::string& id, const std::string& isbn) : Citation{id} {
         auto jsonObj = nlohmann::json::parse(result->body);
 
         // Extract book information from the JSON object
+        if(!check_string(jsonObj, "author") || !check_string(jsonObj, "title") || !check_string(jsonObj, "publisher") || !check_string(jsonObj, "year")) exit(1);
         author = jsonObj["author"].get<std::string>();
         title = jsonObj["title"].get<std::string>();
         publisher = jsonObj["publisher"].get<std::string>();
