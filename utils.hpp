@@ -5,6 +5,8 @@
 #include <string>
 #include <sstream>
 
+#include "third_parties/nlohmann/json.hpp"
+
 const std::string API_ENDPOINT{"http://docman.lcpu.dev"};
 
 inline std::string encodeUriComponent(const std::string& s) {
@@ -27,11 +29,11 @@ inline std::string encodeUriComponent(const std::string& s) {
     return encoded;
 }
 
-inline bool check_string(const json& j, const std::string& s) {
+inline bool check_string(const nlohmann::json& j, const std::string& s) {
     return j.contains(s) && j[s].is_string();
 }
 
-inline bool check_int(const json& j, const std::string& s) {
+inline bool check_int(const nlohmann::json& j, const std::string& s) {
     return j.contains(s) && j[s].is_number();
 }
 
