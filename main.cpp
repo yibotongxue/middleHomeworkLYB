@@ -86,7 +86,7 @@ bool createCitationsPointer(std::vector<Citation*>& citations, const json& j) {
             return false;
 
         auto title = j["title"].get<std::string>();
-        auto author = j["title"].get<std::string>();
+        auto author = j["author"].get<std::string>();
         auto journal = j["journal"].get<std::string>();
         int year = j["year"].get<int>();
         int volume = j["volume"].get<int>();
@@ -217,6 +217,7 @@ int main(int argc, char** argv) {
     std::string outputPath = "";
     for(int i = 0; i < argc; i++) {
         if(std::strcmp(argv[i], "-c") == 0) {
+            if(i == argc - 1) exit(1);
             try{
                 citations = loadCitations(argv[i + 1]);
             }
@@ -225,12 +226,8 @@ int main(int argc, char** argv) {
             }
         }
         if(std::strcmp(argv[i], "-o") == 0) {
-            try{
-                outputPath = argv[i + 1];
-            }
-            catch(...) {
-                std::exit(1);
-            }
+            if(i == argc - 1) exit(1);
+            outputPath = argv[i + 1];
         }
     }
     std::vector<Citation*> printedCitations{}; // Vector to store pointers to citations to be printed
