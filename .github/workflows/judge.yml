@@ -1,7 +1,7 @@
 name: "online judge"
 on:
   push:
-    branches: [enhancement/robustness]
+    branches: [main]
 
 jobs:
   judge:
