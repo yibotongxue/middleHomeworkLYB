@@ -204,7 +204,7 @@ std::string readFromFile(const std::string& filename) {
 void printCitations(const std::vector<Citation*>& printedCitations, const std::string& input, std::ostream& output) {
     output << input; // Print input text
 
-    output << "\nReferences: \n"; // Print section header for references
+    output << "\n\nReferences: \n"; // Print section header for references
 
     for (auto c : printedCitations) {
         c->print(output); // Print citation
