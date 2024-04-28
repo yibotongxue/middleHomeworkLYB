@@ -259,11 +259,11 @@ int main(int argc, char** argv) {
     }
     if(left.size() == 0 || right.size() == 0 || left.size() != right.size()) std::exit(1); // check for mismatched brackets in input text
     std::vector<std::string>ids;
-    std::sort(ids.begin(), ids.end());
-    std::unique(ids.begin(), ids.end());
     for(int i = 0; i < left.size(); i++) {
         ids.push_back(input.substr(left[i] + 1, right[i] - left[i] - 1)); // Extract IDs enclosed in brackets from input text
     }
+    std::sort(ids.begin(), ids.end());
+    std::unique(ids.begin(), ids.end());
     for(auto& id : ids) {
         for(Citation* citation : citations) {
             if(citation->getId() == id)
