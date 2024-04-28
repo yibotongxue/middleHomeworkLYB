@@ -158,6 +158,8 @@ std::vector<Citation*> loadCitations(const std::string& filename) {
     json data;
     file >> data;
 
+    if(data.is_null()) exit(1);
+
     std::vector<Citation*>citations{};
     createCitations(citations, data);
     return citations;
