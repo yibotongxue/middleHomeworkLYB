@@ -229,7 +229,7 @@ int main(int argc, char** argv) {
                 outputPath = argv[i + 1];
             }
             catch(...) {
-                exit(1);
+                std::exit(1);
             }
         }
     }
@@ -239,13 +239,14 @@ int main(int argc, char** argv) {
     try{
         if(strcmp(argv[argc - 1], "-") == 0) {
             std::getline(std::cin, input, '\0');
+            while(input.back() == '\n') input.pop_back();
         }
         else {
             input = readFromFile(argv[argc - 1]);
         }
     }
     catch(...) {
-        exit(1);
+        std::exit(1);
     }
     std::vector<std::string::size_type>left, right;
     auto it = input.find("[");
@@ -297,7 +298,7 @@ int main(int argc, char** argv) {
             printCitations(printedCitations, input, output);
         }
         catch(...) {
-            exit(1);
+            std::exit(1);
         }
     }
     for (auto c : citations) {
