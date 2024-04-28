@@ -91,11 +91,14 @@ Citation& Book::Clone(const Citation& another) {
 /**
  * @brief Print the book citation information.
  * 
- * This function prints the citation information specific to a Book object.
- * It prints the book's unique identifier, authors, title, publisher, and publication year.
+ * This function prints the citation information specific to a Book object to the specified output stream.
+ * It includes the book's unique identifier, author(s), title, publisher, and publication year.
  * 
- * @note This function dose not modify the object's state and is declared as const.
- * @note This function is an overload of the print() function from the base class Citation.
+ * @param output The output stream to which the citation information will be printed.
+ *               This can be std::cout for printing to the console or any other output stream.
+ * 
+ * @note This function does not modify the object's state and is declared as const.
+ *       The citation information is formatted according to the conventions of a book citation.
 */
 void Book::print(std::ostream& output) const {
    output << "[" << id << "] book: " << author << ", " << title << ", " << publisher << ", " << year << "\n";    

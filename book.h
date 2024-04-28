@@ -14,10 +14,10 @@
 */
 class Book : public Citation {
 private:
-    std::string author;
-    std::string title;
-    std::string publisher;
-    std::string year;
+    std::string author;     //!< The author(s) of the book.
+    std::string title;      //!< The title of the book.
+    std::string publisher;  //!< The publisher of the book.
+    std::string year;       //!< The publication year of the book.
 
 public:
     /**
@@ -78,16 +78,21 @@ public:
      * function to provide proper cloning behavior specific to their type.
      * 
      * @param another The Citation object to clone.
-     * @return A reference to the newly created Book object.
+     * @return A reference to the current Book object.
     */
     virtual Citation& Clone(const Citation& another) override;
 
     /**
      * @brief Print the book citation information.
-     * This function overrides the pure virtual function print() from the base class Citation.
-     * It prnts the citation information specific to a Book object.
      * 
-     * @note This function is declared as const, indicating that it dose not modify the object's state.
+     * This function overrides the pure virtual function print() from the base class Citation.
+     * It prints the citation information specific to a Book object to the specified output stream.
+     * 
+     * @param output The output stream to which the citation information will be printed.
+     *               This can be std::cout for printing to the console or any other output stream.
+     * 
+     * @note This function is declared as const, indicating that it does not modify the object's state.
+     *       The citation information is formatted according to the conventions of a book citation.
     */
     virtual void print(std::ostream& output) const override;
 };

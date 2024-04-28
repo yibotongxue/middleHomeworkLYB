@@ -20,12 +20,12 @@
 */
 class Article : public Citation {
 private:
-    std::string title;
-    std::string author;
-    std::string journal;
-    int year;
-    int volume;
-    int issue;
+    std::string title;      //!< The title of the article.
+    std::string author;     //!< The author(s) of the article.
+    std::string journal;    //!< The name of the journal where the article was published.
+    int year;               //!< The publication year of the journal.
+    int volume;             //!< The volume number of the journal.
+    int issue;              //!< The issue number of the journal.
 public:
     /**
      * @brief Delete default constructor for the Article class.
@@ -80,11 +80,21 @@ public:
     /**
      * @brief Print the article citation information.
      * 
-     * This function overrides the pure virtual function print() from the base class Citation.
-     * It prints the citation information specific to an Article object, including the article's
-     * unique identifier, authors, title, journal, publication year, volume, and issue number.
+     * This function prints the citation information specific to an Article object to the specified output stream.
+     * It includes the article's unique identifier, title, authors, journal, publication year, volume, and issue number.
+     * 
+     * @param output The output stream to which the citation information will be printed.
+     *               This can be std::cout for printing to the console or any other output stream.
      * 
      * @note This function does not modify the object's state and is declared as const.
+     *       The citation information is formatted according to the conventions of an article citation.
+     * 
+     * @note It is the responsibility of the caller to ensure that the output stream is valid and open for writing.
+     *       If the output stream is not valid, the function behavior is undefined.
+     * 
+     * @note Implementations of this function should avoid modifying the object's state.
+     *       The primary purpose of this function is to output the citation information
+     *       in a human-readable format to the specified output stream.
     */
     virtual void print(std::ostream& output) const override;
 };

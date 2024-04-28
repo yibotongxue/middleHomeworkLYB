@@ -16,8 +16,8 @@
 */
 class WebPage : public Citation {
 private:
-    std::string title;
-    std::string url;
+    std::string title;   //!< The title of the webpage.
+    std::string url;     //!< The website URL of the webpage.
 
 public:
     /**
@@ -96,12 +96,22 @@ public:
     /**
      * @brief Print the webpage citation information.
      * 
-     * This function overrides the pure virtual function print() from the base class Citation.
-     * It prints the citation information specific to a WebPage object, including the webpage's
-     * unique identifier, title, and website URL.
+     * This function prints the citation information specific to a WebPage object to the specified output stream.
+     * It includes the webpage's unique identifier, title, and website URL.
+     * 
+     * @param output The output stream to which the citation information will be printed.
+     *               This can be std::cout for printing to the console or any other output stream.
      * 
      * @note This function does not modify the object's state and is declared as const.
-    */
+     *       The citation information is formatted according to the conventions of a webpage citation.
+     * 
+     * @note It is the responsibility of the caller to ensure that the output stream is valid and open for writing.
+     *       If the output stream is not valid, the function behavior is undefined.
+     * 
+     * @note Implementations of this function should avoid modifying the object's state.
+     *       The primary purpose of this function is to output the citation information
+     *       in a human-readable format to the specified output stream.
+     */
     virtual void print(std::ostream& output) const override;
 };
 

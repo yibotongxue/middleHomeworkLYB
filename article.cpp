@@ -57,8 +57,10 @@ Citation& Article::Clone(const Citation& another) {
  * @brief Print the article citation information.
  * 
  * This function prints the citation information specific to an Article object.
- * It prints the article's unique identifier, authors, title, journal, publication year,
+ * It includes the article's unique identifier, authors, title, journal, publication year,
  * volume, and issue number.
+ * 
+ * @param output The output stream to which the information will be printed.
  */
 void Article::print(std::ostream& output) const {
     output << "[" << id << "] article: " << author << ", " << title << ", " << journal << ", " << year << ", " << volume << ", " << issue << "\n";

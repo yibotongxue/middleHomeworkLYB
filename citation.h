@@ -21,7 +21,7 @@
 class Citation {
 
 protected:
-    std::string id; 
+    std::string id; // The unique identifier for the citation
 
     // Default assignment operator for Citation class
     Citation& operator=(const Citation& c) = default; 
@@ -75,15 +75,30 @@ public:
     /**
      * @brief Print the citation information.
      * 
-     * This pure virtual function is used to print the citation information.
+     * This pure virtual function is used to print the citation information to the specified output stream.
      * It is declared as const, indicating that it does not modify the object's state.
      * 
-     * @note This function must be overridden in derived classes to provide
-     *       specific print behavior for each citation type.
+     * Derived classes must override this function to provide specific printing behavior for each citation type.
+     * When implementing this function in derived classes, the citation information should be formatted
+     * according to the conventions and requirements of the respective citation type.
+     * 
+     * @param output The output stream to which the citation information will be printed.
+     *               This can be std::cout for printing to the console or any other output stream.
+     * 
+     * @note Implementations of this function should avoid modifying the object's state.
+     *       The primary purpose of this function is to output the citation information
+     *       in a human-readable format to the specified output stream.
     */
     virtual void print(std::ostream& output) const = 0;
 
-    const std::string getId() const {
+    /**
+     * @brief Get the unique identifier of the citation.
+     * 
+     * This function returns the unique identifier of the citation.
+     * 
+     * @return const std::string& The unique identifier of the citation.
+     */
+    const std::string& getId() const {
         return id;
     }
 };
