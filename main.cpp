@@ -215,12 +215,12 @@ void printCitations(const std::vector<std::shared_ptr<Citation>>& printedCitatio
 
 int main(int argc, char** argv) {
     // "docman", "-c", "citations.json", "input.txt"
-    std::vector<std::shared_ptr<Citation>> citations;
+    std::vector<std::shared_ptr<Citation>> citations{};
     std::string outputPath = "";
     std::string input = "";
     for(int i = 1; i < argc; i++) {
         if(std::strcmp(argv[i], "-c") == 0) {
-            if(i == argc - 1) exit(1);
+            if(i == argc - 1 || !citations.empty()) exit(1);
             try{
                 citations = loadCitations(argv[i + 1]);
                 i++;
@@ -231,7 +231,7 @@ int main(int argc, char** argv) {
         }
         else if(std::strcmp(argv[i], "-o") == 0) {
             try{
-                if(i == argc - 1) exit(1);
+                if(i == argc - 1 || outputPath != "") exit(1);
                 outputPath = argv[i + 1];
                 i++;
             }
